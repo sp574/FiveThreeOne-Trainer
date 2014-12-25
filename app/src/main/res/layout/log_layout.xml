@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingEnd="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/bt_squats"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:layout_weight="1"
+            android:onClick="onSquatButtonClick"
+            android:text="@string/bt_squats" />
+
+        <Button
+            android:id="@+id/bt_bench"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bt_squats"
+            android:layout_centerInParent="true"
+            android:layout_weight="1"
+            android:onClick="onBenchButtonClick"
+            android:text="@string/bt_bench" />
+
+        <Button
+            android:id="@+id/bt_deadlifts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bt_bench"
+            android:layout_centerInParent="true"
+            android:layout_weight="1"
+            android:onClick="onDeadliftsButtonClick"
+            android:text="@string/bt_deadlifts" />
+
+        <Button
+            android:id="@+id/bt_press"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bt_deadlifts"
+            android:layout_centerInParent="true"
+            android:layout_weight="1"
+            android:onClick="onPressButtonClick"
+            android:text="@string/bt_press" />
+    </LinearLayout>
+</TableLayout>
+
