@@ -9,5 +9,7 @@
     <string name="bt_bench">Bench</string>
     <string name="bt_press">Press</string>
     <string name="action_calendar">Calendar</string>
+    <string name="tv_warmupex">Warm up</string>
+    <string name="tv_mainex">Main Exercise</string>
 
 </resources>

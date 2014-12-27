@@ -21,7 +21,6 @@
             android:layout_alignParentTop="true"
             android:layout_centerInParent="true"
             android:layout_weight="1"
-            android:onClick="onSquatButtonClick"
             android:text="@string/bt_squats" />
 
         <Button
@@ -31,7 +30,6 @@
             android:layout_below="@+id/bt_squats"
             android:layout_centerInParent="true"
             android:layout_weight="1"
-            android:onClick="onBenchButtonClick"
             android:text="@string/bt_bench" />
 
         <Button
@@ -41,7 +39,6 @@
             android:layout_below="@+id/bt_bench"
             android:layout_centerInParent="true"
             android:layout_weight="1"
-            android:onClick="onDeadliftsButtonClick"
             android:text="@string/bt_deadlifts" />
 
         <Button
@@ -51,7 +48,6 @@
             android:layout_below="@+id/bt_deadlifts"
             android:layout_centerInParent="true"
             android:layout_weight="1"
-            android:onClick="onPressButtonClick"
             android:text="@string/bt_press" />
     </LinearLayout>
 </TableLayout>

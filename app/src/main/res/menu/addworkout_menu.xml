@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:onClick="completeWorkout" android:id="@+id/bt_complete_workout"
+        android:icon="@drawable/check_mark"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="Complete Workout" />
+</menu>

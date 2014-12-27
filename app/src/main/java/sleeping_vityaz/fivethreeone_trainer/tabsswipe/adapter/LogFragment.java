@@ -1,7 +1,9 @@
 package sleeping_vityaz.fivethreeone_trainer.tabsswipe.adapter;
 
+import sleeping_vityaz.fivethreeone_trainer.AddWorkoutActivity;
 import sleeping_vityaz.fivethreeone_trainer.R;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -29,28 +31,36 @@ public class LogFragment extends Fragment {
         bt_squats.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getActivity(), AddWorkoutActivity.class);
+                intent.putExtra("workout_type", "squats");
+                startActivity(intent);
             }
         });
 
         bt_bench.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getActivity(), AddWorkoutActivity.class);
+                intent.putExtra("workout_type", "bench");
+                startActivity(intent);
             }
         });
 
         bt_deadlifts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getActivity(), AddWorkoutActivity.class);
+                intent.putExtra("workout_type", "deadlifts");
+                startActivity(intent);
             }
         });
 
         bt_press.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getActivity(), AddWorkoutActivity.class);
+                intent.putExtra("workout_type", "press");
+                startActivity(intent);
             }
         });
 
@@ -58,15 +68,5 @@ public class LogFragment extends Fragment {
         return rootView;
     }
 
-    public void onSquatButtonClick(View view) {
-    }
 
-    public void onBenchButtonClick(View view) {
-    }
-
-    public void onDeadliftsButtonClick(View view) {
-    }
-
-    public void onPressButtonClick(View view) {
-    }
 }
