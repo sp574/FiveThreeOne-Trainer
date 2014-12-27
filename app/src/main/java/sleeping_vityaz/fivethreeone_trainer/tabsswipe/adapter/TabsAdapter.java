@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 public class TabsAdapter extends FragmentStatePagerAdapter {
 
-    final private int NUM_TABS = 3;
+    final private int NUM_TABS = 4;
 
     public TabsAdapter(FragmentManager fm) {
         super(fm);
@@ -18,6 +18,7 @@ public class TabsAdapter extends FragmentStatePagerAdapter {
             case 0: return new LogFragment();
             case 1: return new CalendarFragment();
             case 2: return new GraphFragment();
+            case 3: return new SettingsFragment();
         }
         return null;
     }
@@ -34,6 +35,7 @@ public class TabsAdapter extends FragmentStatePagerAdapter {
             case 0: return "Log";
             case 1: return "Calendar";
             case 2: return "Graph";
+            case 3: return "Settings";
         }
         return null;
     }

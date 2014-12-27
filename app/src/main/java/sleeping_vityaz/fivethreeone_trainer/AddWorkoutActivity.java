@@ -118,12 +118,22 @@ public class AddWorkoutActivity extends Activity {
     }
 
     public void completeWorkout(MenuItem item) {
-        // add workout to database
 
-        // return to main activity
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        // display a toast confirming workout submission
+        // add only iff all buttons are clicked (warmup and main)
+
+        if (status_wu_1&&status_wu_2&&status_wu_3&&status_m_1&&status_m_2&&status_m_3) {
+            // add workout to database
+
+            // return to main activity
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            // display a toast confirming workout submission
+            // show UNDO button
+        }else{
+            /*if not all buttons are clicked, show a toast
+              telling user to click all buttons to complete workout
+            */
+        }
     }
 }
 
