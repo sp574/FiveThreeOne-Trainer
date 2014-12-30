@@ -11,5 +11,6 @@
     <string name="action_calendar">Calendar</string>
     <string name="tv_warmupex">Warm up</string>
     <string name="tv_mainex">Main Exercise</string>
+    <string name="bt_past_workouts">Show Past Workouts</string>
 
 </resources>

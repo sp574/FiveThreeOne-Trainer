@@ -77,16 +77,17 @@ public class DBTools extends SQLiteOpenHelper {
     // Table Create Statement
     public String createTable(String TABLE){
         String create;
+
         if (TABLE == ASSISTANCE) {
             create = "CREATE TABLE "
                     + TABLE + " ( " + KEY_ID + " INTEGER PRIMARY KEY, " + WEEK
-                    + " INTEGER," + CYCLE + " INTEGER," + MAIN_EXERCISE + " TEXT, "+", " + A_EXERCISE + " TEXT, "+WEIGHT + " TEXT, " + DATE_CREATED
+                    + " INTEGER, " + CYCLE + " INTEGER, " + MAIN_EXERCISE + " TEXT, "+ A_EXERCISE + " TEXT, "+WEIGHT + " TEXT, " + DATE_CREATED
                     + " DATETIME" + " )";
         }else{
             create = "CREATE TABLE "
                     + TABLE + " ( " + KEY_ID + " INTEGER PRIMARY KEY, " + WEEK
-                    + " INTEGER," + CYCLE + " INTEGER, " + WEIGHT + " TEXT, " + DATE_CREATED
-                    + " DATETIME" + NOTES + " TEXT"+" )";
+                    + " INTEGER, " + CYCLE + " INTEGER, " + WEIGHT + " TEXT, " + DATE_CREATED
+                    + " DATETIME, " + NOTES + " TEXT"+" )";
         }
             return create;
     }
@@ -103,7 +104,7 @@ public class DBTools extends SQLiteOpenHelper {
         values.put(CYCLE, queryValues.get(CYCLE));
         values.put(WEIGHT, queryValues.get(WEIGHT));
         values.put(DATE_CREATED, queryValues.get(DATE_CREATED));
-        if (TABLE != ASSISTANCE){ values.put(NOTES, queryValues.get(NOTES));}
+        if (TABLE != ASSISTANCE){values.put(NOTES, queryValues.get(NOTES));}
         if (TABLE == ASSISTANCE){values.put(A_EXERCISE, queryValues.get(A_EXERCISE));}
 
         database.insert(TABLE, null, values);
@@ -141,6 +142,13 @@ public class DBTools extends SQLiteOpenHelper {
         String deleteQuery = "DELETE FROM " + TABLE +" WHERE "+KEY_ID + " = '" + id + "'";
 
         database.execSQL(deleteQuery);
+
+    }
+
+    void deleteAllData(String TABLE)
+    {
+        SQLiteDatabase sdb= this.getWritableDatabase();
+        sdb.delete(TABLE, null, null);
 
     }
 
@@ -183,12 +191,16 @@ public class DBTools extends SQLiteOpenHelper {
     public List<ExerciseObject> getExerciseInfo(String id, String TABLE){
 
         int week, cycle;
+        String selectQuery;
 
         List<ExerciseObject> exerciseList = new ArrayList<ExerciseObject>();
         SQLiteDatabase database = this.getReadableDatabase();
 
-        String selectQuery = "SELECT * FROM "+TABLE+" WHERE "+KEY_ID+" ='" + id + "'";
-
+        if (id!="") {
+             selectQuery = "SELECT * FROM " + TABLE + " WHERE " + KEY_ID + " ='" + id + "'";
+        }else{
+            selectQuery = "SELECT * FROM " + TABLE + "ORDER BY "+DATE_CREATED;
+        }
         Cursor cursor = database.rawQuery(selectQuery, null);
         week = cursor.getInt(cursor.getColumnIndex(WEEK));
         cycle = cursor.getInt(cursor.getColumnIndex(CYCLE));
@@ -202,7 +214,7 @@ public class DBTools extends SQLiteOpenHelper {
 
             do{
                 ExerciseObject eo = new ExerciseObject();
-                eo.setID(Integer.parseInt(id));
+                eo.setID(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
                 eo.setWeek(week);
                 eo.setCycle(cycle);
                 eo.setExercise(TABLE);
