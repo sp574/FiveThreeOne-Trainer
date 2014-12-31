@@ -25,25 +25,31 @@ public class AddWorkoutActivity extends Activity {
     TextView tv_warmupex, tv_mainex;
     Button bt_warmupex_1, bt_warmupex_2, bt_warmupex_3, bt_mainex_1, bt_mainex_2, bt_mainex_3;
 
-    // Table Names
+
     private static final String DEADLIFT = "deadlift";
     private static final String BENCH = "bench";
     private static final String SQUAT = "squat";
     private static final String PRESS = "press";
-    private static final String ASSISTANCE = "assistance";
+
+    // Table Names
+    private static final String MAIN_E = "main_e_table";
+    private static final String ASSISTANCE = "assistance_table";
+    private static final String RM_LOG = "repmax_table";
+
+
 
     // Common column names
-    private static final String KEY_ID = "exerciseID";
-    private static final String WEEK = "week_num";
-    private static final String CYCLE = "cycle_num";
-    private static final String WEIGHT = "weight_num";
-    private static final String DATE_CREATED = "date_created";
-    private static final String NOTES = "notes";
-    private static final String A_EXERCISE = "a_exercise";
-    private static final String MAIN_EXERCISE = "m_exercise";
+    private static final String KEY_ID = "col_exerciseID";
+    private static final String WEEK = "col_week_num";
+    private static final String CYCLE = "col_cycle_num";
+    private static final String WEIGHT = "col_weight_num";
+    private static final String DATE_CREATED = "col_date_created";
+    private static final String NOTES = "col_notes";
+    private static final String A_EXERCISE = "col_a_exercise";
+    private static final String MAIN_EXERCISE = "col_m_exercise";
 
 
-    String exercise_type;
+    String workout_type;
     DBTools dbTools = new DBTools(this);
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +58,9 @@ public class AddWorkoutActivity extends Activity {
 
         Intent logFragmentIntent = getIntent();
 
-        exercise_type = logFragmentIntent.getStringExtra("workout_type");
+        workout_type = logFragmentIntent.getStringExtra("workout_type");
 
+        setUpLayout(workout_type);
         tv_warmupex = (TextView) findViewById(R.id.tv_warmupex);
         tv_mainex = (TextView) findViewById(R.id.tv_mainex);
         bt_warmupex_1 = (Button) findViewById(R.id.bt_warmupex_1);
@@ -62,6 +69,26 @@ public class AddWorkoutActivity extends Activity {
         bt_mainex_1 = (Button) findViewById(R.id.bt_mainex_1);
         bt_mainex_2 = (Button) findViewById(R.id.bt_mainex_2);
         bt_mainex_3 = (Button) findViewById(R.id.bt_mainex_3);
+
+    }
+
+    private void setUpLayout(String workout_type){
+
+        // just testing adding/getting back 1RM
+        HashMap<String, String> queryValuesMap = new HashMap<String, String>();
+
+        //check if there are any assistance exercises
+        // loop through all exercises
+        // while (exercises != empty)
+        queryValuesMap.put("table", RM_LOG);
+        queryValuesMap.put(WEIGHT, "415.0");
+        queryValuesMap.put(DATE_CREATED, "11-15-2014");
+        queryValuesMap.put(MAIN_EXERCISE, workout_type);
+        dbTools.insertExerciseRepMax(queryValuesMap);
+        // ---------------
+
+        double deadlifts_rm = dbTools.getExerciseRepMax(DEADLIFT);
+        System.out.println("DEADLIFTS: "+deadlifts_rm);
 
     }
 
@@ -147,7 +174,6 @@ public class AddWorkoutActivity extends Activity {
     public void completeWorkout(MenuItem item) {
 
         // add only iff all buttons are clicked (warmup and main)
-
         if (status_wu_1&&status_wu_2&&status_wu_3&&status_m_1&&status_m_2&&status_m_3) {
             // add workout to database
 
@@ -156,14 +182,14 @@ public class AddWorkoutActivity extends Activity {
             //check if there are any assistance exercises
             // loop through all exercises
             // while (exercises != empty)
-            queryValuesMap.put("table", DEADLIFT);
-            queryValuesMap.put(WEEK, "week");
+            queryValuesMap.put("table", MAIN_E);
+            queryValuesMap.put(WEEK, "1");
             queryValuesMap.put(CYCLE, "cycle");
             queryValuesMap.put(WEIGHT, "weight");
             queryValuesMap.put(DATE_CREATED, "12-12-12");
             queryValuesMap.put(NOTES, "notes");
             //queryValuesMap.put(A_EXERCISE, "assistance");
-            //queryValuesMap.put(MAIN_EXERCISE, "main exercise");
+            queryValuesMap.put(MAIN_EXERCISE, workout_type);
 
             dbTools.insertExercise(queryValuesMap);
 
@@ -178,12 +204,4 @@ public class AddWorkoutActivity extends Activity {
         }
     }
 }
-/*
 
-week_num";
-private static final String CYCLE = "cycle_num";
-private static final String WEIGHT = "weight_num";
-private static final String DATE_CREATED = "date_created";
-private static final String NOTES = "notes";
-private static final String A_EXERCISE = "a_exercise";
-private static final String MAIN_EXERCISE = "m_exercise";*/
