@@ -67,6 +67,7 @@ public class DBTools extends SQLiteOpenHelper {
         database.execSQL(createTable(ASSISTANCE));
         database.execSQL(createTable(RM_LOG));
 
+
     }
 
     /* This will alter existing table without erasing any of the user's data
@@ -340,6 +341,22 @@ public class DBTools extends SQLiteOpenHelper {
 
         return database.update(RM_LOG, values,
                 MAIN_EXERCISE + " = ?", new String[]{workout_type});
+    }
+
+
+    public int[] getLastCycleWeek(String workout_type) {
+        String query = "SELECT "+CYCLE+" = MAX("+CYCLE+"), "+WEEK+" = MAX("+WEEK+")" + " FROM "+MAIN_E
+                     +" WHERE "+MAIN_EXERCISE+" = '"+workout_type+"'";
+
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.rawQuery(query, null);
+        int cycle=0, week=0;
+        if (cursor.moveToFirst()) {
+            cycle = cursor.getInt(0);
+            week = cursor.getInt(1);
+        }
+        System.out.println("cycle: "+cycle+" week: "+week);
+        return new int[]{cycle, week};
     }
 
 
