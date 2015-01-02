@@ -345,8 +345,13 @@ public class DBTools extends SQLiteOpenHelper {
 
 
     public int[] getLastCycleWeek(String workout_type) {
-        String query = "SELECT "+CYCLE+" = MAX("+CYCLE+"), "+WEEK+" = MAX("+WEEK+")" + " FROM "+MAIN_E
-                     +" WHERE "+MAIN_EXERCISE+" = '"+workout_type+"'";
+        String query = "SELECT "+CYCLE+", "+WEEK+
+                       " FROM "+MAIN_E+
+                       " WHERE "+CYCLE+" = (SELECT MAX("+CYCLE+") "+
+                                           "FROM "+MAIN_E+" " +
+                                           "WHERE "+MAIN_EXERCISE+" = '"+workout_type+"')"+
+                       " AND "+MAIN_EXERCISE+" = '"+workout_type+"'"+
+                       " ORDER BY "+WEEK+" DESC LIMIT 1";
 
         SQLiteDatabase database = this.getReadableDatabase();
         Cursor cursor = database.rawQuery(query, null);

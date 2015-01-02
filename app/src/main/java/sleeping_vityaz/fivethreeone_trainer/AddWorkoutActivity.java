@@ -25,6 +25,8 @@ public class AddWorkoutActivity extends Activity {
     TextView tv_warmupex, tv_mainex;
     Button bt_warmupex_1, bt_warmupex_2, bt_warmupex_3, bt_mainex_1, bt_mainex_2, bt_mainex_3;
 
+    private int[] e_info;
+
 
     private static final String DEADLIFT = "deadlift";
     private static final String BENCH = "bench";
@@ -73,9 +75,20 @@ public class AddWorkoutActivity extends Activity {
         System.out.println(workout_type+": "+oneRepMax);
 
         // cycle, week
-        int[] e_info = dbTools.getLastCycleWeek(workout_type);
-        e_info[0]++; //next cycle to record to the table
-        e_info[1]++; //next week to record to the table
+        e_info = dbTools.getLastCycleWeek(workout_type);
+        if ((e_info[1]%4)==0) { //increment cycles every 4 weeks
+            e_info[0]++;
+        }
+
+        if (e_info[1]<4){
+            e_info[1]++; //only increment weeks 0,1,2,3
+        }else{ // otherwise re-start week enumeration
+            if (e_info[1]%4==0){ e_info[1]=1;}
+            else if (e_info[1]%4==1){ e_info[1]=2;}
+            else if (e_info[1]%4==2){ e_info[1]=3;}
+            else if (e_info[1]%4==3){ e_info[1]=4;}
+        }
+
 
         tv_warmupex = (TextView) findViewById(R.id.tv_warmupex);
         tv_mainex = (TextView) findViewById(R.id.tv_mainex);
@@ -224,17 +237,15 @@ public class AddWorkoutActivity extends Activity {
         // add only iff all buttons are clicked (warmup and main)
         if (status_wu_1&&status_wu_2&&status_wu_3&&status_m_1&&status_m_2&&status_m_3) {
             // add workout to database
-
             HashMap<String, String> queryValuesMap = new HashMap<String, String>();
-
 
             //check if there are any assistance exercises
             // loop through all exercises
             // while (exercises != empty)
             queryValuesMap.put("table", MAIN_E);
-            queryValuesMap.put(WEEK, "1"); // get latest cycle/week for this exercise and +1 to add to the table
-            queryValuesMap.put(CYCLE, "cycle");
-            queryValuesMap.put(WEIGHT, "weight");
+            queryValuesMap.put(WEEK, String.valueOf(e_info[1])); // get latest cycle/week for this exercise and +1 to add to the table
+            queryValuesMap.put(CYCLE, String.valueOf(e_info[0]));
+            queryValuesMap.put(WEIGHT, getWeightString());
             queryValuesMap.put(DATE_CREATED, "12-12-12");
             queryValuesMap.put(NOTES, "notes");
             //queryValuesMap.put(A_EXERCISE, "assistance");
@@ -251,6 +262,12 @@ public class AddWorkoutActivity extends Activity {
               telling user to click all buttons to complete workout
             */
         }
+    }
+
+    private String getWeightString() {
+        return bt_mainex_1.getText().toString()+","+
+               bt_mainex_2.getText().toString()+","+
+               bt_mainex_3.getText().toString();
     }
 
     //remove this once done making the app. For testing purposes only.
