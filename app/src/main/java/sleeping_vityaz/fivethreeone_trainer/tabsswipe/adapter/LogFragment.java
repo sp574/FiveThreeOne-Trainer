@@ -114,6 +114,8 @@ public class LogFragment extends Fragment {
             ExerciseArrayAdapter adapter = new ExerciseArrayAdapter(this.getActivity(), exercise_list);
 
             listView.setAdapter(adapter);
+
+            //listView.setAdapter(adapter);
             /*--------------------------------------------------------
             final String[] array = {"Hello", "World"};
             List arrayList2 = dbTools.getExerciseInfo("", MAIN_E);

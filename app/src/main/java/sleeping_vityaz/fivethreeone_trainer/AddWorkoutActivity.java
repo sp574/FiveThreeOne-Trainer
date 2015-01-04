@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -24,6 +25,7 @@ public class AddWorkoutActivity extends Activity {
             status_m_2 = false,
             status_m_3 = false;
     TextView tv_warmupex, tv_mainex, tv_workout_type, tv_cycle, tv_week;
+    EditText ev_datepicker;
     Button bt_warmupex_1, bt_warmupex_2, bt_warmupex_3, bt_mainex_1, bt_mainex_2, bt_mainex_3;
 
     private int[] e_info;
@@ -93,6 +95,7 @@ public class AddWorkoutActivity extends Activity {
         tv_workout_type = (TextView) findViewById(R.id.tv_workout_type);
         tv_cycle = (TextView) findViewById(R.id.tv_cycle);
         tv_week= (TextView) findViewById(R.id.tv_week);
+        ev_datepicker = (EditText) findViewById(R.id.exercise_date);
 
         if (workout_type.equals(SQUAT)){        tv_workout_type.setText("Squats");}
         else if (workout_type.equals(DEADLIFT)){tv_workout_type.setText("Deadlifts");}

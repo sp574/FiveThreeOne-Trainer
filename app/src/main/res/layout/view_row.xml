@@ -12,6 +12,6 @@
         android:layout_height="wrap_content"
         expandable:headerLayout="@layout/view_header"
         expandable:contentLayout="@layout/exercise_entry"
-        android:background="#e74c3c"/>
+        android:background="#ff690002"/>
 
 </RelativeLayout>

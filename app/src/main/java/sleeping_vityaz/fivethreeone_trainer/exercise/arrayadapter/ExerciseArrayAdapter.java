@@ -26,6 +26,11 @@ public class ExerciseArrayAdapter extends ArrayAdapter<ExerciseObject> {
     private static final String ASSISTANCE = "assistance_table";
     private static final String RM_LOG = "repmax_table";
 
+    private static final String DEADLIFT = "deadlift";
+    private static final String BENCH = "bench";
+    private static final String SQUAT = "squat";
+    private static final String PRESS = "press";
+
     private LayoutInflater inflater;
     DBTools dbTools = new DBTools(this.getContext());
 
@@ -43,14 +48,19 @@ public class ExerciseArrayAdapter extends ArrayAdapter<ExerciseObject> {
         ExerciseObject nn = getItem(position);
 
         TextView exerciseID = (TextView) convertView.findViewById(R.id.exerciseID);
+
         TextView cycle = (TextView) convertView.findViewById(R.id.cycle);
         TextView week = (TextView) convertView.findViewById(R.id.week);
         TextView m_exercise = (TextView) convertView.findViewById(R.id.m_exercise);
 
-        week.setText("Cycle "+String.valueOf(nn.getWeek()));
-        cycle.setText("Week "+String.valueOf(nn.getCycle()));
+        cycle.setText("Cycle "+String.valueOf(nn.getCycle()));
+        week.setText(", Week "+String.valueOf(nn.getWeek()));
 
-        m_exercise.setText(nn.getExercise());
+
+        if (nn.getExercise().equals(SQUAT)){        m_exercise.setText(". "+"Squats");}
+        else if (nn.getExercise().equals(DEADLIFT)){m_exercise.setText(". "+"Deadlifts");}
+        else if (nn.getExercise().equals(BENCH)){   m_exercise.setText(". "+"Bench Press");}
+        else if (nn.getExercise().equals(PRESS)){   m_exercise.setText(". "+"Overhead Press");}
         // getting movie data for the row
 //        ExerciseObject m = exerciseObjectList.get(position);
 

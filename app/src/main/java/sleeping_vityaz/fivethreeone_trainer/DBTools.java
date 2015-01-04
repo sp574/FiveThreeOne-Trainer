@@ -239,7 +239,7 @@ public class DBTools extends SQLiteOpenHelper {
         if (id != "") {
             selectQuery = "SELECT * FROM " + TABLE + " WHERE " + KEY_ID + " = '" + id + "'";
         } else {
-            selectQuery = "SELECT * FROM " + TABLE;// + " ORDER BY " + DATE_CREATED;
+            selectQuery = "SELECT * FROM " + TABLE + " ORDER BY " + DATE_CREATED;
         }
 
         Cursor cursor = database.rawQuery(selectQuery, null);
