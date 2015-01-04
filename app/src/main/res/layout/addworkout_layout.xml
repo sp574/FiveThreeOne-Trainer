@@ -10,12 +10,40 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".AddWorkoutActivity">
 
-    <TextView android:layout_width="wrap_content"
+
+    <TextView
+        android:id="@+id/tv_workout_type"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:text="@string/tv_warmupex"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_cycle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <TextView
         android:id="@+id/tv_warmupex"
-        android:textStyle="bold"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tv_warmupex"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -44,12 +72,15 @@
             android:onClick="warmupThreeOnClick"
             android:text="3" />
     </LinearLayout>
-    <TextView android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:text="@string/tv_mainex"
+
+    <TextView
         android:id="@+id/tv_mainex"
-        android:textStyle="bold"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tv_mainex"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

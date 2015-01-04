@@ -9,6 +9,15 @@ public class Calculations {
         return (weight*reps*0.0333+weight);
     }
 
+    public static double getWeightWarmUpSetOne (double repmax){
+        return Calculations.getWorkingWeight(0.40, repmax);
+    }
+    public static double getWeightWarmUpSetTwo (double repmax){
+        return Calculations.getWorkingWeight(0.50, repmax);
+    }
+    public static double getWeightWarmUpSetThree (double repmax){
+        return Calculations.getWorkingWeight(0.60, repmax);
+    }
     public static double getWeightWeekOneSetOne (double repmax){
         return Calculations.getWorkingWeight(0.65, repmax);
     }

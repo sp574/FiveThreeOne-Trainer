@@ -239,31 +239,29 @@ public class DBTools extends SQLiteOpenHelper {
         if (id != "") {
             selectQuery = "SELECT * FROM " + TABLE + " WHERE " + KEY_ID + " = '" + id + "'";
         } else {
-            selectQuery = "SELECT * FROM " + TABLE + " ORDER BY " + DATE_CREATED;
+            selectQuery = "SELECT * FROM " + TABLE;// + " ORDER BY " + DATE_CREATED;
         }
 
         Cursor cursor = database.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {
-
-            week = cursor.getInt(cursor.getColumnIndex(WEEK));
-            cycle = cursor.getInt(cursor.getColumnIndex(CYCLE));
-
-            String a_selectQuery = "SELECT * FROM " + ASSISTANCE + " WHERE " + WEEK + " = '" + week + "' AND "
-                    + CYCLE + " = '" + cycle + "' AND "
-                    + MAIN_EXERCISE + " = '" + TABLE + "' ";
-            Cursor a_cursor = database.rawQuery(a_selectQuery, null);
-
-
             do {
+                week = cursor.getInt(cursor.getColumnIndex(WEEK));
+                cycle = cursor.getInt(cursor.getColumnIndex(CYCLE));
+
                 ExerciseObject eo = new ExerciseObject();
                 eo.setID(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
                 eo.setWeek(week);
                 eo.setCycle(cycle);
-                eo.setExercise(TABLE);
+                eo.setExercise(cursor.getString(cursor.getColumnIndex(MAIN_EXERCISE)));
                 eo.setWeight(cursor.getString(cursor.getColumnIndex(WEIGHT)));
                 eo.setDateCreated(cursor.getString(cursor.getColumnIndex(DATE_CREATED)));
                 eo.setNotes(cursor.getString(cursor.getColumnIndex(NOTES)));
+
+                String a_selectQuery = "SELECT * FROM " + ASSISTANCE + " WHERE " + WEEK + " = '" + week + "' AND "
+                        + CYCLE + " = '" + cycle + "' AND "
+                        + MAIN_EXERCISE + " = '" + TABLE + "' ";
+                Cursor a_cursor = database.rawQuery(a_selectQuery, null);
 
                 if (a_cursor.moveToFirst()) {
                     do {

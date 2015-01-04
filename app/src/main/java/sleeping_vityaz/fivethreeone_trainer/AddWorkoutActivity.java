@@ -3,6 +3,7 @@ package sleeping_vityaz.fivethreeone_trainer;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,7 +23,7 @@ public class AddWorkoutActivity extends Activity {
             status_m_1 = false,
             status_m_2 = false,
             status_m_3 = false;
-    TextView tv_warmupex, tv_mainex;
+    TextView tv_warmupex, tv_mainex, tv_workout_type, tv_cycle, tv_week;
     Button bt_warmupex_1, bt_warmupex_2, bt_warmupex_3, bt_mainex_1, bt_mainex_2, bt_mainex_3;
 
     private int[] e_info;
@@ -61,7 +62,6 @@ public class AddWorkoutActivity extends Activity {
         Intent logFragmentIntent = getIntent();
 
         workout_type = logFragmentIntent.getStringExtra("workout_type");
-
         setUpLayout(workout_type);
 
 
@@ -90,6 +90,18 @@ public class AddWorkoutActivity extends Activity {
         }
 
 
+        tv_workout_type = (TextView) findViewById(R.id.tv_workout_type);
+        tv_cycle = (TextView) findViewById(R.id.tv_cycle);
+        tv_week= (TextView) findViewById(R.id.tv_week);
+
+        if (workout_type.equals(SQUAT)){        tv_workout_type.setText("Squats");}
+        else if (workout_type.equals(DEADLIFT)){tv_workout_type.setText("Deadlifts");}
+        else if (workout_type.equals(BENCH)){   tv_workout_type.setText("Bench Press");}
+        else if (workout_type.equals(PRESS)){   tv_workout_type.setText("Overhead Press");}
+
+        tv_cycle.setText("Cycle "+String.valueOf(e_info[0]));
+        tv_week.setText(", Week "+String.valueOf(e_info[1]));
+
         tv_warmupex = (TextView) findViewById(R.id.tv_warmupex);
         tv_mainex = (TextView) findViewById(R.id.tv_mainex);
         bt_warmupex_1 = (Button) findViewById(R.id.bt_warmupex_1);
@@ -99,6 +111,9 @@ public class AddWorkoutActivity extends Activity {
         bt_mainex_2 = (Button) findViewById(R.id.bt_mainex_2);
         bt_mainex_3 = (Button) findViewById(R.id.bt_mainex_3);
 
+        bt_warmupex_1.setText(getNumber(e_info, oneRepMax, 1));
+        bt_warmupex_2.setText(getNumber(e_info, oneRepMax, 2));
+        bt_warmupex_3.setText(getNumber(e_info, oneRepMax, 3));
         bt_mainex_1.setText(getNumber(e_info, oneRepMax, 4));
         bt_mainex_2.setText(getNumber(e_info, oneRepMax, 5));
         bt_mainex_3.setText(getNumber(e_info, oneRepMax, 6));
@@ -107,12 +122,16 @@ public class AddWorkoutActivity extends Activity {
 
     // setNum 1-3: warmup, 4-6: working
     private String getNumber(int[] e_info, double oneRepMax, int setNum) {
+
+        switch(setNum) {
+            case 1: return (""+Calculations.getWeightWarmUpSetOne(oneRepMax));
+            case 2: return (""+Calculations.getWeightWarmUpSetTwo(oneRepMax));
+            case 3: return (""+Calculations.getWeightWarmUpSetThree(oneRepMax));
+        }
+
         // week 0,4,8,12...
        if (e_info[1]%4==0 && e_info[1]!=0){
             switch(setNum) {
-                case 1: return "";
-                case 2: return "";
-                case 3: return "";
                 case 4: return (""+Calculations.getWeightWeekFourSetOne(oneRepMax));
                 case 5: return (""+Calculations.getWeightWeekFourSetTwo(oneRepMax));
                 case 6: return (""+Calculations.getWeightWeekFourSetThree(oneRepMax));
@@ -120,9 +139,6 @@ public class AddWorkoutActivity extends Activity {
         }
         else if (e_info[1]%4==1) {
             switch(setNum) {
-                case 1: return "";
-                case 2: return "";
-                case 3: return "";
                 case 4: return (""+Calculations.getWeightWeekOneSetOne(oneRepMax));
                 case 5: return (""+Calculations.getWeightWeekOneSetTwo(oneRepMax));
                 case 6: return (""+Calculations.getWeightWeekOneSetThree(oneRepMax));
@@ -130,9 +146,6 @@ public class AddWorkoutActivity extends Activity {
         }
         else if (e_info[1]%4==2){
             switch(setNum) {
-                case 1: return "";
-                case 2: return "";
-                case 3: return "";
                 case 4: return (""+Calculations.getWeightWeekTwoSetOne(oneRepMax));
                 case 5: return (""+Calculations.getWeightWeekTwoSetTwo(oneRepMax));
                 case 6: return (""+Calculations.getWeightWeekTwoSetThree(oneRepMax));
@@ -140,9 +153,6 @@ public class AddWorkoutActivity extends Activity {
         }
         else if (e_info[1]%4==3){
             switch(setNum) {
-                case 1: return "";
-                case 2: return "";
-                case 3: return "";
                 case 4: return (""+Calculations.getWeightWeekThreeSetOne(oneRepMax));
                 case 5: return (""+Calculations.getWeightWeekThreeSetTwo(oneRepMax));
                 case 6: return (""+Calculations.getWeightWeekThreeSetThree(oneRepMax));
@@ -249,6 +259,7 @@ public class AddWorkoutActivity extends Activity {
             queryValuesMap.put(DATE_CREATED, "12-12-12");
             queryValuesMap.put(NOTES, "notes");
             //queryValuesMap.put(A_EXERCISE, "assistance");
+            //System.out.println("AddWorkoutActivity complete_workout workout-type: "+workout_type);
             queryValuesMap.put(MAIN_EXERCISE, workout_type);
 
             dbTools.insertExercise(queryValuesMap);

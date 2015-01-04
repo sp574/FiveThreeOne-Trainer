@@ -9,28 +9,24 @@
         android:layout_height="wrap_content"
         android:id="@+id/exerciseID"
         android:visibility="gone"/>
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/week"
-        android:text="WEEK!"
+        android:id="@+id/cycle"
         android:textColor="#444444"
         android:textSize="20sp"
         android:textStyle="bold"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/cycle"
+        android:id="@+id/week"
         android:textColor="#444444"
-        android:text="CYCLE"
         android:textSize="20sp"
         android:textStyle="bold"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/m_exercise"
-        android:text="MAIN EXERCISE"
         android:textColor="#444444"
         android:textSize="20sp"
         android:textStyle="bold"/>

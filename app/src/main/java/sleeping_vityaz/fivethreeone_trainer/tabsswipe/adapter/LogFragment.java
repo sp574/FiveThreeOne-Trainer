@@ -95,6 +95,7 @@ public class LogFragment extends Fragment {
 
         List<ExerciseObject> exercise_list = dbTools.getExerciseInfo("", MAIN_E);
 
+
         if(exercise_list.size() != 0){
 
             ListView listView = (ListView) rootView.findViewById(R.id.exercise_listview);
