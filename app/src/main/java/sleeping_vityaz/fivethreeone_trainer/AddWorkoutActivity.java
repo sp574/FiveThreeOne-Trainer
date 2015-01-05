@@ -1,8 +1,11 @@
 package sleeping_vityaz.fivethreeone_trainer;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -10,13 +13,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 
 
-public class AddWorkoutActivity extends Activity {
+public class AddWorkoutActivity extends Activity implements View.OnClickListener {
 
     boolean status_wu_1 = false,
             status_wu_2 = false,
@@ -28,6 +37,8 @@ public class AddWorkoutActivity extends Activity {
     EditText ev_datepicker;
     Button bt_warmupex_1, bt_warmupex_2, bt_warmupex_3, bt_mainex_1, bt_mainex_2, bt_mainex_3;
 
+    private SimpleDateFormat dateFormatter;
+    private DatePickerDialog datePickerDialog;
     private int[] e_info;
 
 
@@ -60,6 +71,8 @@ public class AddWorkoutActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addworkout_layout);
+
+        dateFormatter = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
 
         Intent logFragmentIntent = getIntent();
 
@@ -95,7 +108,17 @@ public class AddWorkoutActivity extends Activity {
         tv_workout_type = (TextView) findViewById(R.id.tv_workout_type);
         tv_cycle = (TextView) findViewById(R.id.tv_cycle);
         tv_week= (TextView) findViewById(R.id.tv_week);
+
         ev_datepicker = (EditText) findViewById(R.id.exercise_date);
+        ev_datepicker.setInputType(InputType.TYPE_NULL);
+        ev_datepicker.requestFocus();
+
+        Calendar newDate = Calendar.getInstance();
+        newDate.set(newDate.get(Calendar.YEAR), newDate.get(Calendar.MONTH), newDate.get(Calendar.DAY_OF_MONTH));
+        ev_datepicker.setText(dateFormatter.format(newDate.getTime()));
+
+        setDateTimeField();
+
 
         if (workout_type.equals(SQUAT)){        tv_workout_type.setText("Squats");}
         else if (workout_type.equals(DEADLIFT)){tv_workout_type.setText("Deadlifts");}
@@ -122,6 +145,28 @@ public class AddWorkoutActivity extends Activity {
         bt_mainex_3.setText(getNumber(e_info, oneRepMax, 6));
 
     }
+
+    private void setDateTimeField() {
+        ev_datepicker.setOnClickListener(this);
+        Calendar newCalendar = Calendar.getInstance();
+        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                ev_datepicker.setText(dateFormatter.format(newDate.getTime()));
+            }
+
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view == ev_datepicker) {
+            datePickerDialog.show();
+        }
+    }
+
 
     // setNum 1-3: warmup, 4-6: working
     private String getNumber(int[] e_info, double oneRepMax, int setNum) {
@@ -259,7 +304,7 @@ public class AddWorkoutActivity extends Activity {
             queryValuesMap.put(WEEK, String.valueOf(e_info[1])); // get latest cycle/week for this exercise and +1 to add to the table
             queryValuesMap.put(CYCLE, String.valueOf(e_info[0]));
             queryValuesMap.put(WEIGHT, getWeightString());
-            queryValuesMap.put(DATE_CREATED, "12-12-12");
+            queryValuesMap.put(DATE_CREATED, changeDateFormat(ev_datepicker.getText().toString()));
             queryValuesMap.put(NOTES, "notes");
             //queryValuesMap.put(A_EXERCISE, "assistance");
             //System.out.println("AddWorkoutActivity complete_workout workout-type: "+workout_type);
@@ -276,6 +321,18 @@ public class AddWorkoutActivity extends Activity {
               telling user to click all buttons to complete workout
             */
         }
+    }
+
+    private String changeDateFormat(String oldDateFormatString){
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyy");
+            Date d = sdf.parse(oldDateFormatString);
+            sdf.applyPattern("yyyy-MM-dd");
+            return sdf.format(d);
+        }catch(ParseException e){
+            e.printStackTrace();
+        }
+        return "";
     }
 
     private String getWeightString() {

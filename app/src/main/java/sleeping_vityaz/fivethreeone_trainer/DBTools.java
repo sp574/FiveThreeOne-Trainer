@@ -6,7 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -239,7 +242,7 @@ public class DBTools extends SQLiteOpenHelper {
         if (id != "") {
             selectQuery = "SELECT * FROM " + TABLE + " WHERE " + KEY_ID + " = '" + id + "'";
         } else {
-            selectQuery = "SELECT * FROM " + TABLE + " ORDER BY " + DATE_CREATED;
+            selectQuery = "SELECT * FROM " + TABLE + " ORDER BY " + DATE_CREATED + " DESC";
         }
 
         Cursor cursor = database.rawQuery(selectQuery, null);
