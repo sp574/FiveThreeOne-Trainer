@@ -245,7 +245,7 @@ public class DBTools extends SQLiteOpenHelper {
         } else {
             selectQuery = "SELECT * FROM " + TABLE +" "+
                           "WHERE "+WEIGHT+" <> '0' "+
-                          "ORDER BY " +CYCLE+" DESC, "+WEEK+" DESC, "+ DATE_CREATED + " DESC";
+                          "ORDER BY " +DATE_CREATED + " DESC, "+CYCLE+" DESC, "+WEEK+" DESC";
         }
 
         Cursor cursor = database.rawQuery(selectQuery, null);
