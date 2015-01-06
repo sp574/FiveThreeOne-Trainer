@@ -240,9 +240,12 @@ public class DBTools extends SQLiteOpenHelper {
         SQLiteDatabase database = this.getReadableDatabase();
 
         if (id != "") {
-            selectQuery = "SELECT * FROM " + TABLE + " WHERE " + KEY_ID + " = '" + id + "'";
+            selectQuery = "SELECT * FROM " + TABLE + " "+
+                          "WHERE " + KEY_ID + " = '" + id + "'";
         } else {
-            selectQuery = "SELECT * FROM " + TABLE + " ORDER BY " + DATE_CREATED + " DESC";
+            selectQuery = "SELECT * FROM " + TABLE +" "+
+                          "WHERE "+WEIGHT+" <> '0' "+
+                          "ORDER BY " +CYCLE+" DESC, "+WEEK+" DESC, "+ DATE_CREATED + " DESC";
         }
 
         Cursor cursor = database.rawQuery(selectQuery, null);

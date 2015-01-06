@@ -124,5 +124,12 @@
             android:onClick="mainThreeOnClick"
             android:text="3" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/bt_skip_deload"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="skipDeloadWeek"
+        android:text="@string/bt_skip_deload" />
 </TableLayout>
 

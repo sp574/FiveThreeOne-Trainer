@@ -35,7 +35,7 @@ public class AddWorkoutActivity extends Activity implements View.OnClickListener
             status_m_3 = false;
     TextView tv_warmupex, tv_mainex, tv_workout_type, tv_cycle, tv_week;
     EditText ev_datepicker;
-    Button bt_warmupex_1, bt_warmupex_2, bt_warmupex_3, bt_mainex_1, bt_mainex_2, bt_mainex_3;
+    Button bt_warmupex_1, bt_warmupex_2, bt_warmupex_3, bt_mainex_1, bt_mainex_2, bt_mainex_3, bt_skip_deload;
 
     private SimpleDateFormat dateFormatter;
     private DatePickerDialog datePickerDialog;
@@ -136,6 +136,11 @@ public class AddWorkoutActivity extends Activity implements View.OnClickListener
         bt_mainex_1 = (Button) findViewById(R.id.bt_mainex_1);
         bt_mainex_2 = (Button) findViewById(R.id.bt_mainex_2);
         bt_mainex_3 = (Button) findViewById(R.id.bt_mainex_3);
+        bt_skip_deload = (Button) findViewById(R.id.bt_skip_deload);
+
+        if (e_info[1]%4 != 0){ // hide the button if it's not a deload week
+            bt_skip_deload.setVisibility(View.GONE);
+        }
 
         bt_warmupex_1.setText(getNumber(e_info, oneRepMax, 1));
         bt_warmupex_2.setText(getNumber(e_info, oneRepMax, 2));
@@ -323,6 +328,25 @@ public class AddWorkoutActivity extends Activity implements View.OnClickListener
         }
     }
 
+    public void skipDeloadWeek(View view) {
+
+        HashMap<String, String> queryValuesMap = new HashMap<String, String>();
+
+        queryValuesMap.put("table", MAIN_E);
+        queryValuesMap.put(WEEK, String.valueOf(e_info[1])); // get latest cycle/week for this exercise and +1 to add to the table
+        queryValuesMap.put(CYCLE, String.valueOf(e_info[0]));
+        queryValuesMap.put(WEIGHT, "0");
+        queryValuesMap.put(DATE_CREATED, changeDateFormat(ev_datepicker.getText().toString()));
+        queryValuesMap.put(NOTES, "");
+        queryValuesMap.put(MAIN_EXERCISE, workout_type);
+
+        dbTools.insertExercise(queryValuesMap);
+
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
     private String changeDateFormat(String oldDateFormatString){
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyy");
@@ -423,6 +447,7 @@ public class AddWorkoutActivity extends Activity implements View.OnClickListener
         dbTools.insertExercise(queryValuesMap);
 */
     }
+
 
 }
 
